@@ -20,10 +20,6 @@ public abstract class UseCase<T, Params> {
         addDisposable(observer);
     }
 
-    public void execute(Params params) {
-        this.buildUseCaseObservable(null, params);
-    }
-
     /**
      * Dispose from current {@link CompositeDisposable}.
      */
