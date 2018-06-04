@@ -23,24 +23,20 @@ public class ImagesPresenter {
         this.getLatestImagesUseCase = getLatestImagesUseCase;
     }
 
-    public void onCountButtonPressed() {
-
-        view.showText(new String(""));//todo: aca va el string que me devuelva el execute del usecase
-
-
+    private void onJsonResponse(String jsonResponse) {
+        view.showText(jsonResponse);
     }
 
     private void onCallServiceButtonPressed() {
-
-        getLatestImagesUseCase.execute(new DisposableObserver<Boolean>() {
+        getLatestImagesUseCase.execute(new DisposableObserver<String>() {
             @Override
-            public void onNext(@NonNull Boolean aBoolean) {
-                loadFromPreferences();
+            public void onNext(@NonNull String jsonResponse) {
+                onJsonResponse(jsonResponse);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-               view.showError();
+                view.showError();
             }
 
             @Override
@@ -48,23 +44,7 @@ public class ImagesPresenter {
                 new ImagesServicesImpl().getLatestImages(null);
             }
         },null);
-
-
-
-        //todo acá tengo que llamar a la domain layer para que llame a la data layer y haga el llamdo al servicio
     }
-
-    private void loadFromPreferences(){
-       // view.showText("EL TEXTO QUE ME TRAGIA DE LAS PREFERENCES");// todo: traerme el texto de las preferences
-    }
-
-
-
-
-
-
-
-
 
     public void register() {
         Activity activity = view.getActivity();
