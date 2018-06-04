@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 26
@@ -26,14 +25,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.jakewharton:butterknife:8.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.google.code.gson:gson:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.13.0'
     compile project(path: ':domain')
     compile project(':data')
+    compile 'com.android.support:recyclerview-v7:26.+'
+    compile 'com.github.bumptech.glide:glide:4.3.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
 }

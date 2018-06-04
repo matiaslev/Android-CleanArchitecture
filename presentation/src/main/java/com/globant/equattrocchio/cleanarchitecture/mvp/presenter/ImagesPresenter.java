@@ -9,7 +9,6 @@ import com.globant.equattrocchio.data.ImagesServicesImpl;
 import com.globant.equattrocchio.domain.GetLatestImagesUseCase;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 
 public class ImagesPresenter {
@@ -24,7 +23,7 @@ public class ImagesPresenter {
     }
 
     private void onJsonResponse(String jsonResponse) {
-        view.showText(jsonResponse);
+        view.showImageCards(jsonResponse);
     }
 
     private void onCallServiceButtonPressed() {
