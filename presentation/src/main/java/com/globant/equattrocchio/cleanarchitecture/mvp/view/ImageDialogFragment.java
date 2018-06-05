@@ -21,8 +21,8 @@ import butterknife.ButterKnife;
 
 public class ImageDialogFragment extends DialogFragment {
 
-    @BindView(R.id.image_detail)
-    ImageView imageDetail;
+    @BindView(R.id.image)
+    ImageView imageView;
     @BindView(R.id.text_id)
     TextView textId;
     @BindView(R.id.text_url)
@@ -37,32 +37,36 @@ public class ImageDialogFragment extends DialogFragment {
     TextView textSite;
 
     private Gson gson = new Gson();
-    private Image image;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        image = gson.fromJson(getArguments().getString("image"), Image.class);
+        Image image = gson.fromJson(getArguments().getString("image"), Image.class);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.dialog_fragment_image, null);
-        ButterKnife.bind(this, view);
+        if (getActivity() != null) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        Glide.with(view).load(image.getUrl()).into(imageDetail);
-        textId.setText(image.getId().toString());
-        textUrl.setText(image.getUrl());
-        textLargeUrl.setText(image.getLargeUrl());
-        textSourceId.setText(image.getSourceId() != null ? image.getSourceId().toString() : "");
-        textCopyright.setText(image.getCopyright());
-        textSite.setText(image.getSite());
+            View view = inflater.inflate(R.layout.dialog_fragment_image, null);
+            ButterKnife.bind(this, view);
 
-        builder.setView(view)
-                .setPositiveButton(R.string.back, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+            if (image != null) {
+                Glide.with(view).load(image.getUrl()).into(imageView);
+                textId.setText(image.getId().toString());
+                textUrl.setText(image.getUrl());
+                textLargeUrl.setText(image.getLargeUrl());
+                textSourceId.setText(image.getSourceId() != null ? image.getSourceId().toString() : "");
+                textCopyright.setText(image.getCopyright());
+                textSite.setText(image.getSite());
+            }
+            builder.setView(view)
+                    .setPositiveButton(R.string.back, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+        }
+
         return builder.create();
     }
 

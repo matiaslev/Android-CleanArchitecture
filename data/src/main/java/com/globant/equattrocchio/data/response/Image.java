@@ -4,11 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Image {
-    @SerializedName("id")
-    @Expose
     private Integer id;
-    @SerializedName("url")
-    @Expose
     private String url;
     @SerializedName("large_url")
     @Expose
@@ -16,11 +12,7 @@ public class Image {
     @SerializedName("source_id")
     @Expose
     private Integer sourceId;
-    @SerializedName("copyright")
-    @Expose
     private String copyright;
-    @SerializedName("site")
-    @Expose
     private String site;
 
     public Integer getId() {

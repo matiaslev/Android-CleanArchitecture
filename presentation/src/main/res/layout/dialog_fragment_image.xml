@@ -10,32 +10,29 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_detail"
+            android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/text_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:layout_marginTop="@dimen/margin_all_normal_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_detail" />
+            app:layout_constraintTop_toBottomOf="@+id/image" />
 
         <TextView
             android:id="@+id/text_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:layout_marginTop="@dimen/margin_all_normal_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_id" />
@@ -44,8 +41,7 @@
             android:id="@+id/text_large_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:layout_marginTop="@dimen/margin_all_normal_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_url" />
@@ -54,8 +50,7 @@
             android:id="@+id/text_source_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:layout_marginTop="@dimen/margin_all_normal_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_large_url" />
@@ -64,8 +59,7 @@
             android:id="@+id/text_copyright"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:layout_marginTop="@dimen/margin_all_normal_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_source_id" />
@@ -74,8 +68,7 @@
             android:id="@+id/text_site"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:layout_marginTop="@dimen/margin_all_normal_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_copyright" />

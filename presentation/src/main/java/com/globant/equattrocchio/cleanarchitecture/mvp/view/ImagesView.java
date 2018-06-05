@@ -7,8 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
-import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.getLatestImagesButtonObserver;
-import com.globant.equattrocchio.data.response.Image;
+import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.LatestImagesButtonObserver;
 import com.globant.equattrocchio.data.response.Result;
 
 import butterknife.BindView;
@@ -29,7 +28,7 @@ public class ImagesView extends ActivityView {
     }
 
     public void showImageCards(Result result) {
-        adapter.result = result;
+        adapter.setResult(result);
         adapter.notifyDataSetChanged();
     }
 
@@ -43,7 +42,7 @@ public class ImagesView extends ActivityView {
 
     @OnClick(R.id.btn_call_service)
     public void callServiceBtnPressed() {
-        RxBus.post(new getLatestImagesButtonObserver.GetLatestImagesButtonPressed());
+        RxBus.post(new LatestImagesButtonObserver.OnLatestImagesButtonPressed());
     }
 
     public void showError() {

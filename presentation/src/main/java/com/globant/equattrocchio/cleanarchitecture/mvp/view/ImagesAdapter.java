@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 
 import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
-import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.getImageDetailButtonObserver;
+import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.ImageDetailButtonObserver;
 import com.globant.equattrocchio.data.response.Image;
 import com.globant.equattrocchio.data.response.Result;
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
-    public Result result;
+    private Result result;
 
     @Override
     public ImagesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,8 +27,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RxBus.post(new getImageDetailButtonObserver
-                        .GetImageDetailButtonPressed(image.getId()));
+                RxBus.post(new ImageDetailButtonObserver.OnImageDetailButtonPressed(image.getId()));
             }
         });
     }
@@ -36,5 +35,13 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
     @Override
     public int getItemCount() {
         return result != null ? result.getImages().size() : 0;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
     }
 }

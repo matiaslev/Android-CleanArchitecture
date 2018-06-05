@@ -4,10 +4,9 @@ import android.app.Activity;
 
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
-import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.getImageDetailButtonObserver;
-import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.getLatestImagesButtonObserver;
+import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.ImageDetailButtonObserver;
+import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.LatestImagesButtonObserver;
 import com.globant.equattrocchio.data.ImagesServicesImpl;
-import com.globant.equattrocchio.data.response.Image;
 import com.globant.equattrocchio.data.response.Result;
 import com.globant.equattrocchio.domain.GetImageDetailUseCase;
 import com.globant.equattrocchio.domain.GetLatestImagesUseCase;
@@ -64,7 +63,7 @@ public class ImagesPresenter {
     }
 
     private void onGetImageDetailButtonObserver(int id) {
-        getImageDetailUseCase.id = id;
+        getImageDetailUseCase.setId(id);
         getImageDetailUseCase.execute(new DisposableObserver<String>() {
             @Override
             public void onNext(String jsonImage) {
@@ -90,16 +89,16 @@ public class ImagesPresenter {
             return;
         }
 
-        RxBus.subscribe(activity, new getLatestImagesButtonObserver() {
+        RxBus.subscribe(activity, new LatestImagesButtonObserver() {
             @Override
-            public void onEvent(GetLatestImagesButtonPressed event) {
+            public void onEvent(OnLatestImagesButtonPressed event) {
                 onGetLatestImagesButtonPressed();
             }
         });
 
-        RxBus.subscribe(activity, new getImageDetailButtonObserver() {
+        RxBus.subscribe(activity, new ImageDetailButtonObserver() {
             @Override
-            public void onEvent(GetImageDetailButtonPressed event) {
+            public void onEvent(OnImageDetailButtonPressed event) {
                 onGetImageDetailButtonObserver(event.id);
             }
         });
