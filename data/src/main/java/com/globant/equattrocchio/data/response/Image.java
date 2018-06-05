@@ -15,7 +15,13 @@ public class Image {
     private String largeUrl;
     @SerializedName("source_id")
     @Expose
-    private Object sourceId;
+    private Integer sourceId;
+    @SerializedName("copyright")
+    @Expose
+    private String copyright;
+    @SerializedName("site")
+    @Expose
+    private String site;
 
     public Integer getId() {
         return id;
@@ -41,12 +47,27 @@ public class Image {
         this.largeUrl = largeUrl;
     }
 
-    public Object getSourceId() {
+    public Integer getSourceId() {
         return sourceId;
     }
 
-    public void setSourceId(Object sourceId) {
+    public void setSourceId(int sourceId) {
         this.sourceId = sourceId;
     }
 
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
 }

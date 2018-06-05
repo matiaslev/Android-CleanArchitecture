@@ -2,9 +2,13 @@ package com.globant.equattrocchio.cleanarchitecture.mvp.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.globant.equattrocchio.cleanarchitecture.R;
+import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
+import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.getImageDetailButtonObserver;
+import com.globant.equattrocchio.data.response.Image;
 import com.globant.equattrocchio.data.response.Result;
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
@@ -18,7 +22,15 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
 
     @Override
     public void onBindViewHolder(ImagesViewHolder holder, int position) {
-        holder.bind(result.getImages().get(position));
+        final Image image = result.getImages().get(position);
+        holder.bind(image);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RxBus.post(new getImageDetailButtonObserver
+                        .GetImageDetailButtonPressed(image.getId()));
+            }
+        });
     }
 
     @Override
