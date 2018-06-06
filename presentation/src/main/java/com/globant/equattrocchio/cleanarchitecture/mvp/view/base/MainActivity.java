@@ -4,26 +4,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.globant.equattrocchio.cleanarchitecture.R;
-import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter;
-import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView;
+import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImageListPresenter;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList.ImageListView;
 import com.globant.equattrocchio.data.ImagesServicesImpl;
 import com.globant.equattrocchio.domain.useCases.GetImageDetailUseCase;
 import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImagesPresenter presenter;
-    private GetLatestImagesUseCase getLatestImagesUseCase;
-    private GetImageDetailUseCase getImageDetailUseCase;
+    private ImageListPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getLatestImagesUseCase = new GetLatestImagesUseCase(new ImagesServicesImpl());
-        getImageDetailUseCase = new GetImageDetailUseCase(new ImagesServicesImpl());
-        presenter = new ImagesPresenter(new ImagesView(this), getLatestImagesUseCase,
-                getImageDetailUseCase);
+        GetLatestImagesUseCase getLatestImagesUseCase = new GetLatestImagesUseCase(new ImagesServicesImpl());
+        presenter = new ImageListPresenter(new ImageListView(this), getLatestImagesUseCase);
     }
 
     @Override

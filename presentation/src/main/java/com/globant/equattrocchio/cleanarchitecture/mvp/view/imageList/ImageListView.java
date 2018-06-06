@@ -1,4 +1,4 @@
-package com.globant.equattrocchio.cleanarchitecture.mvp.view;
+package com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,9 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.globant.equattrocchio.cleanarchitecture.R;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.base.ActivityView;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageDetail.ImageDetailDialogFragment;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.LatestImagesButtonObserver;
-import com.globant.equattrocchio.data.response.Result;
 import com.globant.equattrocchio.domain.model.ImageEntity;
 import com.google.gson.Gson;
 
@@ -18,14 +19,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ImagesView extends ActivityView {
+public class ImageListView extends ActivityView {
 
-    @BindView(R.id.recycler_images)
-    RecyclerView recyclerImages;
-    private ImagesAdapter adapter = new ImagesAdapter();
+    @BindView(R.id.recycler_images) RecyclerView recyclerImages;
+    private String IMAGE_ENTITY_TAG = "Image Entity";
+    private ImageListAdapter adapter = new ImageListAdapter();
     private Gson gson = new Gson();
 
-    public ImagesView(AppCompatActivity activity) {
+    public ImageListView(AppCompatActivity activity) {
         super(activity);
         ButterKnife.bind(this, activity);
         recyclerImages.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -37,12 +38,9 @@ public class ImagesView extends ActivityView {
         adapter.notifyDataSetChanged();
     }
 
-    public void showImageDetailDialogFragment(ImageEntity imageEntity) {
-        ImageDialogFragment newFragment = new ImageDialogFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("image", gson.toJson(imageEntity));
-        newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(), "ImageEntity");
+    public void showImageDetailDialogFragment(int imageId) {
+        ImageDetailDialogFragment.newInstance(imageId).show(getFragmentManager(),
+                IMAGE_ENTITY_TAG);
     }
 
     @OnClick(R.id.btn_call_service)

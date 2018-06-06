@@ -22,6 +22,8 @@ public class ImagesServicesImpl implements ImagesServices {
 
     private static final String URL= "http://splashbase.co/";
     SplashbaseApi api;
+    private ResultDataMapper resultDataMapper;
+    private ImageDataMapper imageDataMapper;
 
     public ImagesServicesImpl() {
         Retrofit retrofit = new Retrofit.Builder().
@@ -37,7 +39,7 @@ public class ImagesServicesImpl implements ImagesServices {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.isSuccessful()) {
-                    observer.onNext(new ResultDataMapper().transform(response.body(), null));
+                    observer.onNext(getResultDataMapper().transform(response.body(), null));
                 }
             }
 
@@ -54,7 +56,7 @@ public class ImagesServicesImpl implements ImagesServices {
             @Override
             public void onResponse(Call<Image> call, Response<Image> response) {
                 if (response.isSuccessful()) {
-                    observer.onNext(new ImageDataMapper().transform(response.body(), null));
+                    observer.onNext(getImageDataMapper().transform(response.body(), null));
                 }
             }
 
@@ -63,5 +65,19 @@ public class ImagesServicesImpl implements ImagesServices {
                 //todo: update the UI with a connection error message
             }
         });
+    }
+
+    private ResultDataMapper getResultDataMapper() {
+        if (resultDataMapper == null) {
+            resultDataMapper = new ResultDataMapper();
+        }
+        return resultDataMapper;
+    }
+
+    private ImageDataMapper getImageDataMapper() {
+        if (imageDataMapper == null) {
+            imageDataMapper = new ImageDataMapper();
+        }
+        return imageDataMapper;
     }
 }

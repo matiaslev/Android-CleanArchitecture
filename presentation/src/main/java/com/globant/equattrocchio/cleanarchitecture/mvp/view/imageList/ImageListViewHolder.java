@@ -1,4 +1,4 @@
-package com.globant.equattrocchio.cleanarchitecture.mvp.view;
+package com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,7 +14,7 @@ import com.globant.equattrocchio.domain.model.ImageEntity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ImagesViewHolder extends RecyclerView.ViewHolder {
+public class ImageListViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.text_id)
     TextView textId;
@@ -23,7 +23,7 @@ public class ImagesViewHolder extends RecyclerView.ViewHolder {
 
     private RequestManager requestManager;
 
-    ImagesViewHolder(View itemView) {
+    ImageListViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         requestManager = Glide.with(itemView);

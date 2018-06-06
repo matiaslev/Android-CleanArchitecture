@@ -1,7 +1,7 @@
 package com.globant.equattrocchio.data;
 
-import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter;
-import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView;
+import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImageListPresenter;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList.ImageListView;
 import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 
 import org.junit.Before;
@@ -14,17 +14,17 @@ import org.mockito.MockitoAnnotations;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ImagesPresenterTest {
-    private ImagesPresenter presenter;
+public class ImageListPresenterTest {
+    private ImageListPresenter presenter;
     @Mock
-    ImagesView view;
+    ImageListView view;
     @Mock
     GetLatestImagesUseCase getLatestImagesUseCase;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        presenter = new ImagesPresenter(view, getLatestImagesUseCase);
+        presenter = new ImageListPresenter(view, getLatestImagesUseCase);
     }
 
     @Test

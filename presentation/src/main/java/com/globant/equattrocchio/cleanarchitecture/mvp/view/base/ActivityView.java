@@ -1,4 +1,4 @@
-package com.globant.equattrocchio.cleanarchitecture.mvp.view;
+package com.globant.equattrocchio.cleanarchitecture.mvp.view.base;
 
 import android.app.FragmentManager;
 import android.content.Context;
