@@ -10,9 +10,12 @@ import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.ImageDetailButtonObserver;
 import com.globant.equattrocchio.data.response.Image;
 import com.globant.equattrocchio.data.response.Result;
+import com.globant.equattrocchio.domain.model.ImageEntity;
+
+import java.util.List;
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
-    private Result result;
+    private List<ImageEntity> imageEntities;
 
     @Override
     public ImagesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -22,7 +25,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
 
     @Override
     public void onBindViewHolder(ImagesViewHolder holder, int position) {
-        final Image image = result.getImages().get(position);
+        final ImageEntity image = imageEntities.get(position);
         holder.bind(image);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,14 +37,14 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesViewHolder> {
 
     @Override
     public int getItemCount() {
-        return result != null ? result.getImages().size() : 0;
+        return imageEntities != null ? imageEntities.size() : 0;
     }
 
-    public Result getResult() {
-        return result;
+    public List<ImageEntity> getImageEntities() {
+        return imageEntities;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setImageEntities(List<ImageEntity> imageEntities) {
+        this.imageEntities = imageEntities;
     }
 }

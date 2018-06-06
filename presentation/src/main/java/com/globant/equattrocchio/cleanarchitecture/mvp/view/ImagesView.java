@@ -9,6 +9,10 @@ import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.LatestImagesButtonObserver;
 import com.globant.equattrocchio.data.response.Result;
+import com.globant.equattrocchio.domain.model.ImageEntity;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +23,7 @@ public class ImagesView extends ActivityView {
     @BindView(R.id.recycler_images)
     RecyclerView recyclerImages;
     private ImagesAdapter adapter = new ImagesAdapter();
+    private Gson gson = new Gson();
 
     public ImagesView(AppCompatActivity activity) {
         super(activity);
@@ -27,17 +32,17 @@ public class ImagesView extends ActivityView {
         recyclerImages.setAdapter(adapter);
     }
 
-    public void showImageCards(Result result) {
-        adapter.setResult(result);
+    public void showImageCards(List<ImageEntity> imageEntities) {
+        adapter.setImageEntities(imageEntities);
         adapter.notifyDataSetChanged();
     }
 
-    public void showImageDetailDialogFragment(String jsonImage) {
+    public void showImageDetailDialogFragment(ImageEntity imageEntity) {
         ImageDialogFragment newFragment = new ImageDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("image", jsonImage);
+        bundle.putString("image", gson.toJson(imageEntity));
         newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(), "Image");
+        newFragment.show(getFragmentManager(), "ImageEntity");
     }
 
     @OnClick(R.id.btn_call_service)

@@ -8,9 +8,12 @@ import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.ImageDetai
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.LatestImagesButtonObserver;
 import com.globant.equattrocchio.data.ImagesServicesImpl;
 import com.globant.equattrocchio.data.response.Result;
-import com.globant.equattrocchio.domain.GetImageDetailUseCase;
-import com.globant.equattrocchio.domain.GetLatestImagesUseCase;
+import com.globant.equattrocchio.domain.model.ImageEntity;
+import com.globant.equattrocchio.domain.useCases.GetImageDetailUseCase;
+import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableObserver;
@@ -35,15 +38,15 @@ public class ImagesPresenter {
         this.getLatestImagesUseCase = getLatestImagesUseCase;
     }
 
-    private void onGetLatestImageResponse(String jsonResult) {
-        view.showImageCards(gson.fromJson(jsonResult, Result.class));
+    private void onGetLatestImageResponse(List<ImageEntity> imageEntities) {
+        view.showImageCards(imageEntities);
     }
 
     private void onGetLatestImagesButtonPressed() {
-        getLatestImagesUseCase.execute(new DisposableObserver<String>() {
+        getLatestImagesUseCase.execute(new DisposableObserver<List<ImageEntity>>() {
             @Override
-            public void onNext(@NonNull String jsonResult) {
-                onGetLatestImageResponse(jsonResult);
+            public void onNext(@NonNull List<ImageEntity> imageEntities) {
+                onGetLatestImageResponse(imageEntities);
             }
 
             @Override
@@ -58,16 +61,16 @@ public class ImagesPresenter {
         },null);
     }
 
-    private void onGetImageDetailResponse(String jsonImage) {
-        view.showImageDetailDialogFragment(jsonImage);
+    private void onGetImageDetailResponse(ImageEntity imageEntity) {
+        view.showImageDetailDialogFragment(imageEntity);
     }
 
     private void onGetImageDetailButtonObserver(int id) {
         getImageDetailUseCase.setId(id);
-        getImageDetailUseCase.execute(new DisposableObserver<String>() {
+        getImageDetailUseCase.execute(new DisposableObserver<ImageEntity>() {
             @Override
-            public void onNext(String jsonImage) {
-                onGetImageDetailResponse(jsonImage);
+            public void onNext(ImageEntity imageEntity) {
+                onGetImageDetailResponse(imageEntity);
             }
 
             @Override

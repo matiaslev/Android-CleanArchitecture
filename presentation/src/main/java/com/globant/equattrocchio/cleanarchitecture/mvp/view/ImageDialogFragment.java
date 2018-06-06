@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.data.response.Image;
+import com.globant.equattrocchio.domain.model.ImageEntity;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -40,7 +41,7 @@ public class ImageDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Image image = gson.fromJson(getArguments().getString("image"), Image.class);
+        ImageEntity image = gson.fromJson(getArguments().getString("image"), ImageEntity.class);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         if (getActivity() != null) {

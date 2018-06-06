@@ -1,4 +1,6 @@
-package com.globant.equattrocchio.domain;
+package com.globant.equattrocchio.domain.useCases;
+
+import com.globant.equattrocchio.domain.Preconditions;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

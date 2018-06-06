@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.data.response.Image;
+import com.globant.equattrocchio.domain.model.ImageEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +29,7 @@ public class ImagesViewHolder extends RecyclerView.ViewHolder {
         requestManager = Glide.with(itemView);
     }
 
-    public void bind(Image image) {
+    public void bind(ImageEntity image) {
         textId.setText(image.getId().toString());
         requestManager.load(image.getUrl()).into(imageView);
     }

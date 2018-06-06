@@ -2,7 +2,7 @@ package com.globant.equattrocchio.data;
 
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter;
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView;
-import com.globant.equattrocchio.domain.GetLatestImagesUseCase;
+import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 
 import org.junit.Before;
 import org.junit.Test;
