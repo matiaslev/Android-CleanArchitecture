@@ -1,10 +1,6 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter;
 
-import android.app.Activity;
-
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageDetail.ImageDetailDialogFragment;
-import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
-import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.ImageDetailButtonObserver;
 import com.globant.equattrocchio.data.ImagesServicesImpl;
 import com.globant.equattrocchio.domain.model.ImageEntity;
 import com.globant.equattrocchio.domain.useCases.GetImageDetailUseCase;
@@ -15,22 +11,23 @@ public class ImageDetailPresenter {
 
     private ImageDetailDialogFragment view;
     private GetImageDetailUseCase getImageDetailUseCase;
+    private int imageId;
 
-    public ImageDetailPresenter(ImageDetailDialogFragment view, GetImageDetailUseCase getImageDetailUseCase) {
+    public ImageDetailPresenter(ImageDetailDialogFragment view,
+                                GetImageDetailUseCase getImageDetailUseCase,
+                                int imageId) {
         this.view = view;
         this.getImageDetailUseCase = getImageDetailUseCase;
+        this.imageId = imageId;
+        init();
     }
 
-    private void onGetImageDetailResponse(ImageEntity imageEntity) {
-        view.updateImageDetailDialogFragment(imageEntity);
-    }
-
-    public void onGetImageDetailButtonObserver(int id) {
-        getImageDetailUseCase.setId(id);
+    public void init() {
+        getImageDetailUseCase.setId(imageId);
         getImageDetailUseCase.execute(new DisposableObserver<ImageEntity>() {
             @Override
             public void onNext(ImageEntity imageEntity) {
-                onGetImageDetailResponse(imageEntity);
+                onImageDetailResponse(imageEntity);
             }
 
             @Override
@@ -43,5 +40,9 @@ public class ImageDetailPresenter {
                 new ImagesServicesImpl().getImageDetail(-1,null);
             }
         }, null);
+    }
+
+    private void onImageDetailResponse(ImageEntity imageEntity) {
+        view.updateImageDetailDialogFragment(imageEntity);
     }
 }

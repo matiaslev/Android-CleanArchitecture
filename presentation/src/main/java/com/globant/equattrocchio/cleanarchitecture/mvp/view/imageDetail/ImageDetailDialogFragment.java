@@ -40,6 +40,7 @@ public class ImageDetailDialogFragment extends DialogFragment {
 
     private static final String image_id = "id";
     private View view;
+    private ImageDetailPresenter imageDetailPresenter;
 
     public static ImageDetailDialogFragment newInstance(int id) {
         ImageDetailDialogFragment imageDetailDialogFragment = new ImageDetailDialogFragment();
@@ -51,14 +52,12 @@ public class ImageDetailDialogFragment extends DialogFragment {
         return imageDetailDialogFragment;
     }
 
-    private ImageDetailPresenter imageDetailPresenter;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GetImageDetailUseCase getImageDetailUseCase = new GetImageDetailUseCase(new ImagesServicesImpl());
-        imageDetailPresenter = new ImageDetailPresenter(this, getImageDetailUseCase);
-        imageDetailPresenter.onGetImageDetailButtonObserver(getArguments().getInt(image_id));
+        imageDetailPresenter = new ImageDetailPresenter(this, getImageDetailUseCase,
+                getArguments().getInt(image_id));
     }
 
     @Nullable

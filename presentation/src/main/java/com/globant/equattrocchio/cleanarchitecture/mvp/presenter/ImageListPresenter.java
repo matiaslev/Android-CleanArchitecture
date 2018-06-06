@@ -25,15 +25,15 @@ public class ImageListPresenter {
         this.getLatestImagesUseCase = getLatestImagesUseCase;
     }
 
-    private void onGetLatestImageResponse(List<ImageEntity> imageEntities) {
+    private void onLatestImageResponse(List<ImageEntity> imageEntities) {
         view.showImageCards(imageEntities);
     }
 
-    private void onGetLatestImagesButtonPressed() {
+    private void onLatestImagesButtonPressed() {
         getLatestImagesUseCase.execute(new DisposableObserver<List<ImageEntity>>() {
             @Override
             public void onNext(@NonNull List<ImageEntity> imageEntities) {
-                onGetLatestImageResponse(imageEntities);
+                onLatestImageResponse(imageEntities);
             }
 
             @Override
@@ -58,7 +58,7 @@ public class ImageListPresenter {
         RxBus.subscribe(activity, new LatestImagesButtonObserver() {
             @Override
             public void onEvent(OnLatestImagesButtonPressed event) {
-                onGetLatestImagesButtonPressed();
+                onLatestImagesButtonPressed();
             }
         });
 
