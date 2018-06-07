@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.globant.equattrocchio.cleanarchitecture.R;
@@ -68,11 +69,8 @@ public class ImageDetailDialogFragment extends DialogFragment {
         return view;
     }
 
-
-
     public void updateImageDetailDialogFragment(ImageEntity imageEntity) {
         Glide.with(view).load(imageEntity.getUrl()).into(imageView);
-        progressBarImageDetail.setVisibility(View.GONE);
         imageView.setVisibility(View.VISIBLE);
         textId.setText(imageEntity.getId().toString());
         textUrl.setText(imageEntity.getUrl());
@@ -83,9 +81,21 @@ public class ImageDetailDialogFragment extends DialogFragment {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDialog().cancel();
+                close();
             }
         });
+    }
+
+    public void hideLoader() {
+        progressBarImageDetail.setVisibility(View.GONE);
+    }
+
+    public void close() {
+        getDialog().cancel();
+    }
+
+    public void showError(String message) {
+        Toast.makeText(view.getContext(), message, Toast.LENGTH_LONG).show();
     }
 
 }

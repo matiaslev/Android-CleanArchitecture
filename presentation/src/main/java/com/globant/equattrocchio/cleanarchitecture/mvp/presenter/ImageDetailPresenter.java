@@ -1,7 +1,6 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter;
 
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageDetail.ImageDetailDialogFragment;
-import com.globant.equattrocchio.data.ImagesServicesImpl;
 import com.globant.equattrocchio.domain.model.ImageEntity;
 import com.globant.equattrocchio.domain.useCases.GetImageDetailUseCase;
 
@@ -27,22 +26,23 @@ public class ImageDetailPresenter {
         getImageDetailUseCase.execute(new DisposableObserver<ImageEntity>() {
             @Override
             public void onNext(ImageEntity imageEntity) {
-                onImageDetailResponse(imageEntity);
+                imageDetailResponse(imageEntity);
             }
 
             @Override
             public void onError(Throwable e) {
-                //view.showError();
+                view.showError(e.getMessage());
+                view.close();
             }
 
             @Override
             public void onComplete() {
-                new ImagesServicesImpl().getImageDetail(-1,null);
+                view.hideLoader();
             }
         }, null);
     }
 
-    private void onImageDetailResponse(ImageEntity imageEntity) {
+    private void imageDetailResponse(ImageEntity imageEntity) {
         view.updateImageDetailDialogFragment(imageEntity);
     }
 }

@@ -8,10 +8,20 @@ import com.globant.equattrocchio.data.service.api.SplashbaseApi;
 import com.globant.equattrocchio.domain.model.ImageEntity;
 import com.globant.equattrocchio.domain.service.ImagesServices;
 import com.google.gson.Gson;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.util.List;
 
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DefaultObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,42 +39,56 @@ public class ImagesServicesImpl implements ImagesServices {
         Retrofit retrofit = new Retrofit.Builder().
                 baseUrl(URL).
                 addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         api  = retrofit.create(SplashbaseApi.class);
     }
 
     @Override
     public void getLatestImages(final Observer<List<ImageEntity>> observer) {
-        api.getImages().enqueue(new Callback<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                if (response.isSuccessful()) {
-                    observer.onNext(getResultDataMapper().transform(response.body(), null));
-                }
-            }
+        api.getImages()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<Result>() {
+                    @Override
+                    public void onNext(Result result) {
+                        observer.onNext(getResultDataMapper().transform(result, null));
+                    }
 
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-                //todo: update the UI with a connection error message
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        observer.onError(new RuntimeException("getLatestImages service error"));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        observer.onComplete();
+                    }
+                });
     }
 
     @Override
     public void getImageDetail(int id, final Observer<ImageEntity> observer) {
-        api.getImageDetail(id).enqueue(new Callback<Image>() {
-            @Override
-            public void onResponse(Call<Image> call, Response<Image> response) {
-                if (response.isSuccessful()) {
-                    observer.onNext(getImageDataMapper().transform(response.body(), null));
-                }
-            }
+        api.getImageDetail(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<Image>() {
+                    @Override
+                    public void onNext(Image image) {
+                        observer.onNext(getImageDataMapper().transform(image, null));
 
-            @Override
-            public void onFailure(Call<Image> call, Throwable t) {
-                //todo: update the UI with a connection error message
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        observer.onError(new RuntimeException("getImageDetail service error"));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        observer.onComplete();
+                    }
+                });
     }
 
     private ResultDataMapper getResultDataMapper() {

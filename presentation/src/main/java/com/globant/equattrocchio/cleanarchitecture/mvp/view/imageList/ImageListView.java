@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.base.ActivityView;
@@ -24,7 +25,6 @@ public class ImageListView extends ActivityView {
     @BindView(R.id.recycler_images) RecyclerView recyclerImages;
     private String IMAGE_ENTITY_TAG = "Image Entity";
     private ImageListAdapter adapter = new ImageListAdapter();
-    private Gson gson = new Gson();
 
     public ImageListView(AppCompatActivity activity) {
         super(activity);
@@ -48,7 +48,7 @@ public class ImageListView extends ActivityView {
         RxBus.post(new LatestImagesButtonObserver.OnLatestImagesButtonPressed());
     }
 
-    public void showError() {
-        //todo: show toast with the error
+    public void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

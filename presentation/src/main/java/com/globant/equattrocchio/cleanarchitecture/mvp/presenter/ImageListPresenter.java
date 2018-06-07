@@ -6,7 +6,6 @@ import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList.ImageListV
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.ImageDetailButtonObserver;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.LatestImagesButtonObserver;
-import com.globant.equattrocchio.data.ImagesServicesImpl;
 import com.globant.equattrocchio.domain.model.ImageEntity;
 import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 
@@ -25,7 +24,7 @@ public class ImageListPresenter {
         this.getLatestImagesUseCase = getLatestImagesUseCase;
     }
 
-    private void onLatestImageResponse(List<ImageEntity> imageEntities) {
+    private void getLatestImageResponse(List<ImageEntity> imageEntities) {
         view.showImageCards(imageEntities);
     }
 
@@ -33,17 +32,17 @@ public class ImageListPresenter {
         getLatestImagesUseCase.execute(new DisposableObserver<List<ImageEntity>>() {
             @Override
             public void onNext(@NonNull List<ImageEntity> imageEntities) {
-                onLatestImageResponse(imageEntities);
+                getLatestImageResponse(imageEntities);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                view.showError();
+                view.showError(e.getMessage());
             }
 
             @Override
             public void onComplete() {
-                new ImagesServicesImpl().getLatestImages(null);
+
             }
         },null);
     }
