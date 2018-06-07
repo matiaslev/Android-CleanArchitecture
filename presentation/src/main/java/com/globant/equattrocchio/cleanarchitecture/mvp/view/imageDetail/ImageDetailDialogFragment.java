@@ -1,11 +1,8 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.view.imageDetail;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +15,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImageDetailPresenter;
-import com.globant.equattrocchio.data.ImagesServicesImpl;
+import com.globant.equattrocchio.data.ImagesServiceImpl;
 import com.globant.equattrocchio.domain.model.ImageEntity;
-import com.globant.equattrocchio.domain.service.ImagesServices;
 import com.globant.equattrocchio.domain.useCases.GetImageDetailUseCase;
-import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +51,7 @@ public class ImageDetailDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GetImageDetailUseCase getImageDetailUseCase = new GetImageDetailUseCase(new ImagesServicesImpl());
+        GetImageDetailUseCase getImageDetailUseCase = new GetImageDetailUseCase(new ImagesServiceImpl());
         imageDetailPresenter = new ImageDetailPresenter(this, getImageDetailUseCase,
                 getArguments().getInt(image_id));
     }

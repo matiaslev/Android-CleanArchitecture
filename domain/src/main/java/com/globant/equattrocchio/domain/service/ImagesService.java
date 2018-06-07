@@ -6,7 +6,7 @@ import java.util.List;
 
 import io.reactivex.Observer;
 
-public interface ImagesServices {
+public interface ImagesService {
 
     void getLatestImages(Observer<List<ImageEntity>> observer);
     void getImageDetail(int id, Observer<ImageEntity> observer);

@@ -6,7 +6,7 @@ import com.globant.equattrocchio.data.response.Result;
 import com.globant.equattrocchio.data.response.ResultDataMapper;
 import com.globant.equattrocchio.data.service.api.SplashbaseApi;
 import com.globant.equattrocchio.domain.model.ImageEntity;
-import com.globant.equattrocchio.domain.service.ImagesServices;
+import com.globant.equattrocchio.domain.service.ImagesService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.List;
@@ -18,14 +18,14 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ImagesServicesImpl implements ImagesServices {
+public class ImagesServiceImpl implements ImagesService {
 
     private static final String URL= "http://splashbase.co/";
-    SplashbaseApi api;
+    private SplashbaseApi api;
     private ResultDataMapper resultDataMapper;
     private ImageDataMapper imageDataMapper;
 
-    public ImagesServicesImpl() {
+    public ImagesServiceImpl() {
         Retrofit retrofit = new Retrofit.Builder().
                 baseUrl(URL).
                 addConverterFactory(GsonConverterFactory.create())
@@ -66,7 +66,6 @@ public class ImagesServicesImpl implements ImagesServices {
                     @Override
                     public void onNext(Image image) {
                         observer.onNext(getImageDataMapper().transform(image, null));
-
                     }
 
                     @Override

@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 import com.globant.equattrocchio.domain.model.ImageEntity;
 import com.globant.equattrocchio.domain.util.BaseDataMapper;
 
-public class ImageDataMapper extends BaseDataMapper<ImageEntity, Image, Object> {
+public class ImageDataMapper extends BaseDataMapper<ImageEntity, Image, Void> {
 
     @Nullable
     @Override
-    public ImageEntity transform(Image input, Object additionalArg) {
+    public ImageEntity transform(Image input, Void aVoid) {
         ImageEntity imageEntity = new ImageEntity();
         imageEntity.setId(input.getId());
         imageEntity.setUrl(input.getUrl());

@@ -1,23 +1,23 @@
 package com.globant.equattrocchio.domain.useCases;
 
 import com.globant.equattrocchio.domain.model.ImageEntity;
-import com.globant.equattrocchio.domain.service.ImagesServices;
+import com.globant.equattrocchio.domain.service.ImagesService;
 
 import io.reactivex.observers.DisposableObserver;
 
 public class GetImageDetailUseCase extends UseCase<ImageEntity,Void> {
 
-    private ImagesServices imagesServices;
+    private ImagesService imagesService;
     private int id;
 
-    public GetImageDetailUseCase(ImagesServices imagesServices) {
+    public GetImageDetailUseCase(ImagesService imagesService) {
         super();
-        this.imagesServices = imagesServices;
+        this.imagesService = imagesService;
     }
 
     @Override
     void buildUseCaseObservable(DisposableObserver<ImageEntity> observer, Void aVoid) {
-        imagesServices.getImageDetail(id, observer);
+        imagesService.getImageDetail(id, observer);
     }
 
     public int getId() {

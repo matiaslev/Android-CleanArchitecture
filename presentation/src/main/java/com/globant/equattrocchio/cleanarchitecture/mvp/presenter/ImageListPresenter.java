@@ -44,7 +44,7 @@ public class ImageListPresenter {
             public void onComplete() {
 
             }
-        },null);
+        }, null);
     }
 
     public void register() {
