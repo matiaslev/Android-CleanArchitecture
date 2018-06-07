@@ -1,6 +1,6 @@
 package com.globant.equattrocchio.domain.model;
 
-public class ImageEntity {
+public class Image {
     private Integer id;
     private String url;
     private String largeUrl;

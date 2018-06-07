@@ -2,11 +2,11 @@ package com.globant.equattrocchio.cleanarchitecture.mvp.presenter;
 
 import android.app.Activity;
 
-import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList.ImageListView;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImageListView;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.ImageDetailButtonObserver;
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.LatestImagesButtonObserver;
-import com.globant.equattrocchio.domain.model.ImageEntity;
+import com.globant.equattrocchio.domain.model.Image;
 import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 
 import java.util.List;
@@ -24,14 +24,14 @@ public class ImageListPresenter {
         this.getLatestImagesUseCase = getLatestImagesUseCase;
     }
 
-    private void getLatestImageResponse(List<ImageEntity> imageEntities) {
+    private void getLatestImageResponse(List<Image> imageEntities) {
         view.showImageCards(imageEntities);
     }
 
     private void onLatestImagesButtonPressed() {
-        getLatestImagesUseCase.execute(new DisposableObserver<List<ImageEntity>>() {
+        getLatestImagesUseCase.execute(new DisposableObserver<List<Image>>() {
             @Override
-            public void onNext(@NonNull List<ImageEntity> imageEntities) {
+            public void onNext(@NonNull List<Image> imageEntities) {
                 getLatestImageResponse(imageEntities);
             }
 
@@ -64,7 +64,7 @@ public class ImageListPresenter {
         RxBus.subscribe(activity, new ImageDetailButtonObserver() {
             @Override
             public void onEvent(OnImageDetailButtonPressed event) {
-                view.showImageDetailDialogFragment(event.id);
+                view.showImageDetailDialogFragment(event.image);
             }
         });
     }

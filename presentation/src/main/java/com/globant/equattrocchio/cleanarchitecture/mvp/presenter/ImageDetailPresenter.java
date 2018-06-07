@@ -1,32 +1,32 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter;
 
-import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageDetail.ImageDetailDialogFragment;
-import com.globant.equattrocchio.domain.model.ImageEntity;
+import com.globant.equattrocchio.cleanarchitecture.mvp.model.ImageDetailDialogFragmentModel;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImageDetailDialogFragmentView;
+import com.globant.equattrocchio.domain.model.Image;
 import com.globant.equattrocchio.domain.useCases.GetImageDetailUseCase;
 
 import io.reactivex.observers.DisposableObserver;
 
 public class ImageDetailPresenter {
 
-    private ImageDetailDialogFragment view;
+    private ImageDetailDialogFragmentView view;
     private GetImageDetailUseCase getImageDetailUseCase;
-    private int imageId;
+    private ImageDetailDialogFragmentModel imageDetailDialogFragmentModel;
 
-    public ImageDetailPresenter(ImageDetailDialogFragment view,
+    public ImageDetailPresenter(ImageDetailDialogFragmentView view,
                                 GetImageDetailUseCase getImageDetailUseCase,
-                                int imageId) {
+                                ImageDetailDialogFragmentModel imageDetailDialogFragmentModel) {
         this.view = view;
         this.getImageDetailUseCase = getImageDetailUseCase;
-        this.imageId = imageId;
-        init();
+        this.imageDetailDialogFragmentModel = imageDetailDialogFragmentModel;
     }
 
     public void init() {
-        getImageDetailUseCase.setId(imageId);
-        getImageDetailUseCase.execute(new DisposableObserver<ImageEntity>() {
+        view.updateImageDialogFragment(imageDetailDialogFragmentModel);
+        getImageDetailUseCase.execute(new DisposableObserver<Image>() {
             @Override
-            public void onNext(ImageEntity imageEntity) {
-                imageDetailResponse(imageEntity);
+            public void onNext(Image image) {
+                imageDetailResponse(image);
             }
 
             @Override
@@ -39,10 +39,10 @@ public class ImageDetailPresenter {
             public void onComplete() {
                 view.hideLoader();
             }
-        }, null);
+        }, imageDetailDialogFragmentModel.getImageId());
     }
 
-    private void imageDetailResponse(ImageEntity imageEntity) {
-        view.updateImageDetailDialogFragment(imageEntity);
+    private void imageDetailResponse(Image image) {
+        view.updateImageDetailDialogFragment(image);
     }
 }

@@ -1,7 +1,7 @@
 package com.globant.equattrocchio.data;
 
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImageListPresenter;
-import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList.ImageListView;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImageListView;
 import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 
 import org.junit.Before;

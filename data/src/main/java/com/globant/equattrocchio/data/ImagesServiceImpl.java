@@ -1,11 +1,11 @@
 package com.globant.equattrocchio.data;
 
-import com.globant.equattrocchio.data.response.Image;
+import com.globant.equattrocchio.data.response.ImageResponse;
 import com.globant.equattrocchio.data.response.ImageDataMapper;
-import com.globant.equattrocchio.data.response.Result;
-import com.globant.equattrocchio.data.response.ResultDataMapper;
+import com.globant.equattrocchio.data.response.ImageListResponse;
+import com.globant.equattrocchio.data.response.ImageListDataMapper;
 import com.globant.equattrocchio.data.service.api.SplashbaseApi;
-import com.globant.equattrocchio.domain.model.ImageEntity;
+import com.globant.equattrocchio.domain.model.Image;
 import com.globant.equattrocchio.domain.service.ImagesService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -20,29 +20,28 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ImagesServiceImpl implements ImagesService {
 
-    private static final String URL= "http://splashbase.co/";
     private SplashbaseApi api;
-    private ResultDataMapper resultDataMapper;
+    private ImageListDataMapper imageListDataMapper;
     private ImageDataMapper imageDataMapper;
 
     public ImagesServiceImpl() {
         Retrofit retrofit = new Retrofit.Builder().
-                baseUrl(URL).
-                addConverterFactory(GsonConverterFactory.create())
+                baseUrl(BuildConfig.SERVER_URL)
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         api  = retrofit.create(SplashbaseApi.class);
     }
 
     @Override
-    public void getLatestImages(final Observer<List<ImageEntity>> observer) {
+    public void getLatestImages(final Observer<List<Image>> observer) {
         api.getImages()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultObserver<Result>() {
+                .subscribe(new DefaultObserver<ImageListResponse>() {
                     @Override
-                    public void onNext(Result result) {
-                        observer.onNext(getResultDataMapper().transform(result, null));
+                    public void onNext(ImageListResponse imageListResponse) {
+                        observer.onNext(getImageListDataMapper().transform(imageListResponse, null));
                     }
 
                     @Override
@@ -58,14 +57,14 @@ public class ImagesServiceImpl implements ImagesService {
     }
 
     @Override
-    public void getImageDetail(int id, final Observer<ImageEntity> observer) {
+    public void getImageDetail(int id, final Observer<Image> observer) {
         api.getImageDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultObserver<Image>() {
+                .subscribe(new DefaultObserver<ImageResponse>() {
                     @Override
-                    public void onNext(Image image) {
-                        observer.onNext(getImageDataMapper().transform(image, null));
+                    public void onNext(ImageResponse imageResponse) {
+                        observer.onNext(getImageDataMapper().transform(imageResponse, null));
                     }
 
                     @Override
@@ -80,11 +79,11 @@ public class ImagesServiceImpl implements ImagesService {
                 });
     }
 
-    private ResultDataMapper getResultDataMapper() {
-        if (resultDataMapper == null) {
-            resultDataMapper = new ResultDataMapper();
+    private ImageListDataMapper getImageListDataMapper() {
+        if (imageListDataMapper == null) {
+            imageListDataMapper = new ImageListDataMapper();
         }
-        return resultDataMapper;
+        return imageListDataMapper;
     }
 
     private ImageDataMapper getImageDataMapper() {

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.globant.equattrocchio.cleanarchitecture.R;
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImageListPresenter;
-import com.globant.equattrocchio.cleanarchitecture.mvp.view.imageList.ImageListView;
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImageListView;
 import com.globant.equattrocchio.data.ImagesServiceImpl;
 import com.globant.equattrocchio.domain.useCases.GetLatestImagesUseCase;
 
